@@ -21,6 +21,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
+        
+        
+        
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -40,20 +43,46 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     func insertNewObject(_ sender: AnyObject) {
         let context = self.fetchedResultsController.managedObjectContext
-        let newEvent = Event(context: context)
+        
              
         // If appropriate, configure the new managed object.
-        newEvent.timeStamp = NSDate()
-
-        // Save the context.
-        do {
-            try context.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+      
+        
+//    let event = Event(context: context)
+//        event.timeStamp
+        
+        let controller = UIAlertController(title: "New Phrase", message: "", preferredStyle: .alert)
+        
+    
+        
+        controller.addTextField { (text :UITextField) in
+            text.placeholder = " - Enter Phrase - "
         }
+        
+        let actionDone = UIAlertAction(title: "Done", style: .default) { (allert: UIAlertAction) in
+            
+            let newPhrase = Phrases(context: context)
+            
+            newPhrase.phrase = controller.textFields?[0].text
+            // Save the context.
+            do {
+                try context.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+            
+            
+        }
+        
+        controller.addAction(actionDone)
+        
+        self.present(controller, animated: true, completion: nil)
+        
+
+        
     }
 
     // MARK: - Segues
@@ -83,8 +112,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let event = self.fetchedResultsController.object(at: indexPath)
-        self.configureCell(cell, withEvent: event)
+        let phrase = self.fetchedResultsController.object(at: indexPath)
+        self.configureCell(cell, withPhrase : phrase)
         return cell
     }
 
@@ -109,26 +138,26 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
 
-    func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
-        cell.textLabel!.text = event.timeStamp!.description
+    func configureCell(_ cell: UITableViewCell, withPhrase phrase: Phrases) {
+        cell.textLabel!.text = phrase.phrase
     }
 
     // MARK: - Fetched results controller
 
-    var fetchedResultsController: NSFetchedResultsController<Event> {
+    var fetchedResultsController: NSFetchedResultsController<Phrases> {
         if _fetchedResultsController != nil {
             return _fetchedResultsController!
         }
         
-        let fetchRequest: NSFetchRequest<Event> = Event.fetchRequest()
+        let fetchRequest: NSFetchRequest<Phrases> = Phrases.fetchRequest()
         
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = SortDescriptor(key: "timeStamp", ascending: false)
-        
-        fetchRequest.sortDescriptors = [sortDescriptor]
+//        let sortDescriptor = SortDescriptor(key: "timeStamp", ascending: false)
+//        
+        fetchRequest.sortDescriptors = []
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
@@ -147,7 +176,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         return _fetchedResultsController!
     }    
-    var _fetchedResultsController: NSFetchedResultsController<Event>? = nil
+    var _fetchedResultsController: NSFetchedResultsController<Phrases>? = nil
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.beginUpdates()
@@ -171,7 +200,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             case .delete:
                 tableView.deleteRows(at: [indexPath!], with: .fade)
             case .update:
-                self.configureCell(tableView.cellForRow(at: indexPath!)!, withEvent: anObject as! Event)
+                self.configureCell(tableView.cellForRow(at: indexPath!)!, withPhrase: anObject as! Phrases)
             case .move:
                 tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }

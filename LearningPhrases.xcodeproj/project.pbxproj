@@ -14,7 +14,6 @@
 		03C5798E1D27F4430001FE0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03C5798C1D27F4430001FE0D /* Main.storyboard */; };
 		03C579901D27F4430001FE0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03C5798F1D27F4430001FE0D /* Assets.xcassets */; };
 		03C579931D27F4430001FE0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03C579911D27F4430001FE0D /* LaunchScreen.storyboard */; };
-		03C5799B1D27F4890001FE0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C5799A1D27F4890001FE0D /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		03C5798F1D27F4430001FE0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		03C579921D27F4430001FE0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03C579941D27F4430001FE0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		03C5799A1D27F4890001FE0D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../../UsingSpeechRecognitionwithAVAudioEngine/SpeakToMe/ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +58,7 @@
 		03C579821D27F4430001FE0D /* LearningPhrases */ = {
 			isa = PBXGroup;
 			children = (
+				03EEE3061D2A9C5B002047B9 /* Data model */,
 				03C579831D27F4430001FE0D /* AppDelegate.swift */,
 				03C579881D27F4430001FE0D /* MasterViewController.swift */,
 				03C5798A1D27F4430001FE0D /* DetailViewController.swift */,
@@ -68,9 +67,15 @@
 				03C579911D27F4430001FE0D /* LaunchScreen.storyboard */,
 				03C579941D27F4430001FE0D /* Info.plist */,
 				03C579851D27F4430001FE0D /* LearningPhrases.xcdatamodeld */,
-				03C5799A1D27F4890001FE0D /* ViewController.swift */,
 			);
 			path = LearningPhrases;
+			sourceTree = "<group>";
+		};
+		03EEE3061D2A9C5B002047B9 /* Data model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Data model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,7 +152,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03C5799B1D27F4890001FE0D /* ViewController.swift in Sources */,
 				03C579871D27F4430001FE0D /* LearningPhrases.xcdatamodeld in Sources */,
 				03C579841D27F4430001FE0D /* AppDelegate.swift in Sources */,
 				03C579891D27F4430001FE0D /* MasterViewController.swift in Sources */,
@@ -309,6 +313,7 @@
 				03C579991D27F4430001FE0D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

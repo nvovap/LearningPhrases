@@ -25,6 +25,7 @@ class DetailViewController: UIViewController,SFSpeechRecognizerDelegate {
     
     @IBOutlet var textView : UITextView!
     @IBOutlet var recordButton : UIButton!
+    @IBOutlet weak var resultLabel: UILabel!
     
     
 
@@ -32,7 +33,7 @@ class DetailViewController: UIViewController,SFSpeechRecognizerDelegate {
         // Update the user interface for the detail item.
         if let detail = self.detailItem {
             if let label = self.detailDescriptionLabel {
-                label.text = detail.timeStamp!.description
+                label.text = detail.phrase
             }
         }
     }
@@ -81,7 +82,7 @@ class DetailViewController: UIViewController,SFSpeechRecognizerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-    var detailItem: Event? {
+    var detailItem: Phrases? {
         didSet {
             // Update the view.
             self.configureView()
@@ -119,6 +120,13 @@ class DetailViewController: UIViewController,SFSpeechRecognizerDelegate {
             if let result = result {
                 self.textView.text = result.bestTranscription.formattedString
                 isFinal = result.isFinal
+                
+                if self.textView.text.uppercased() == self.detailDescriptionLabel.text?.uppercased() {
+                    self.resultLabel.text = "Success"
+                } else {
+                    self.resultLabel.text = "Not success"
+                }
+                
             }
             
             if error != nil || isFinal {
@@ -148,7 +156,7 @@ class DetailViewController: UIViewController,SFSpeechRecognizerDelegate {
     
     // MARK: SFSpeechRecognizerDelegate
     
-    public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
+    internal func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         if available {
             recordButton.isEnabled = false
             recordButton.setTitle("Recognition not available", for: .disabled)
